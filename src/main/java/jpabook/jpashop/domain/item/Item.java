@@ -2,6 +2,7 @@ package jpabook.jpashop.domain.item;
 
 
 import jpabook.jpashop.domain.Category;
+import jpabook.jpashop.exception.NotEnoughStockException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,11 +13,12 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
-@Getter @Setter
+@Getter
 public abstract class Item {
 
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "item_id")
     private Long id;
 
@@ -26,4 +28,27 @@ public abstract class Item {
 
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
+
+    //==비즈니스 로직 ==//
+    //set 으로 밖에서 지지고 볶는 것보다 이 안에서 처리하는게 객체지향적(응집력^) 이다.
+    /*
+        stock 증가
+     */
+    public void addStock(int quantity) {
+        this.stockQuantity += quantity;
+    }
+
+    /*
+        stock 감소
+     */
+    public void removeStock(int quantity) {
+        int resetStock = this.stockQuantity - quantity;
+        if (resetStock < 0) {
+            throw new NotEnoughStockException("need more stock");
+        }
+        this.stockQuantity = resetStock;
+
+    }
+
+
 }
