@@ -29,7 +29,7 @@ public class OrderRepository {
         return em.find(Order.class, id);
     }
 
-    public List<Order> findAll(OrderSearch orderSearch) {
+    public List<Order> findAllByString(OrderSearch orderSearch) {
 
         //jpql 방식 - 일일이 써야하고 오류났을때 찾기도 번거롭다.
         String jpql = "select o from Order o join o.member m ";
