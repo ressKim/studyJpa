@@ -101,6 +101,7 @@ public class OrderRepository {
         ).getResultList();
     }
 
+
     //fetch 를 이용해서 컬레견 형태를 조회 - 단점은 페이징이 안된다.
     //1대 다 형태에서는 fetch join 을 하면 안된다!
     // 컬렉션 fetch join 은 한군데만 사용해야 된다. 그 이상이 될 경우 데이터가 부정합할수 있다.
@@ -112,5 +113,16 @@ public class OrderRepository {
                         " join fetch o.orderItems oi" +
                         " join fetch oi.item i", Order.class)
                 .getResultList();
+    }
+
+    public List<Order> findAllWithMemberDelivery(int offset, int limit) {
+        return em.createQuery(
+                "select o from Order o" +
+                        " join fetch o.member m" +
+                        " join fetch o.delivery d", Order.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+
     }
 }
