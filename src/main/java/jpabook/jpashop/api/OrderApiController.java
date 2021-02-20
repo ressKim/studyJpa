@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.*;
@@ -52,9 +53,10 @@ public class OrderApiController {
     @GetMapping("/api/v3/orders")
     public List<OrderDto> ordersV3() {
         List<Order> orders = orderRepository.findAllWithItem();
-        return orders.stream()
+        List<OrderDto> list = orders.stream()
                 .map(OrderDto::new)
                 .collect(toList());
+        return list;
     }
 
     @GetMapping("/api/v3.1/orders")
