@@ -20,6 +20,7 @@ import static javax.persistence.FetchType.LAZY;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
 
+    //test
     @Id
     @GeneratedValue
     @Column(name = "order_id")
