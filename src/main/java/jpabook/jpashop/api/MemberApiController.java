@@ -64,6 +64,7 @@ public class MemberApiController {
         private String name;
     }
 
+
     /**
      * 등록 V1: 요청 값으로 Member 엔티티를 직접 받는다.
      * 문제점
